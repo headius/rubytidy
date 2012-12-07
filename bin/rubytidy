@@ -1,0 +1,15 @@
+#!/usr/bin/env jruby
+
+require 'jruby-parser'
+
+original_file = ARGV[0]
+
+raise ArgumentError, 'usage: rubytidy original.rb [new.rb]' unless original_file
+
+new_file = ARGV[1]
+
+output = new_file ? File.open(new_file) : $stdout
+
+ast = JRubyParser.parse(File.read(original_file))
+
+output.puts ast.to_source
